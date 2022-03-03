@@ -13,7 +13,7 @@ class FirstFrame(tk.Frame):
 		self.e_id = ""
 		self.e_email = ""
 
-		L1 = tk.Label(self, text="Employee_Id", font = ("Arial Bold", 15))
+		L1 = tk.Label(self, text="Email", font = ("Arial Bold", 15))
 		L1.place(x = 50, y = 50)
 		T1 = tk.Entry(self, width = 30, bd = 5)
 		T1.place(x = 200, y = 50)
@@ -27,16 +27,16 @@ class FirstFrame(tk.Frame):
 		label.place(x = 230, y = 230)
 
 		def infinite_loop():
-			print(condition)
-			print(u_name)
-			print("Running infinite_loop")
+			# print(condition)
+			# print(u_name)
+			# print("Running infinite_loop")
 			if condition:
-				a = Take(u_name, self.e_id)
+				a = Take(self.e_name, self.e_id)
 				a.main()
-				self.after(5000, infinite_loop)
+				self.after(5000, infinite_loop) # 5000 : 5 Secs
 			else:
 				self.after(5000, infinite_loop)
-				
+
 		def verify():
 			l = Login(T1.get(), T2.get())
 			r = l.login()
@@ -51,7 +51,8 @@ class FirstFrame(tk.Frame):
 				controller.show_frame(SecondFrame)
 				infinite_loop()
 				t = datetime.now()
-				print(f"Start time : {t}")
+				self.hide_and_return()
+				# print(f"Start time : {t}")
 			else:
 				messagebox.showinfo("Error", "Wrong Credentials")
 		b1 = tk.Button(self, text="Start", command=verify)
@@ -59,10 +60,13 @@ class FirstFrame(tk.Frame):
 
 		def quit():
 			t = datetime.now()
-			print(f"Exit time : {t}")
+			# print(f"Exit time : {t}")
 			app.destroy()
 		b2 = tk.Button(self, text="Exit", command=quit)
 		b2.place(x = 650, y = 450)
+	def hide_and_return(self):
+			app.iconify() # Will minimize the app
+			SecondFrame.show_me()
 
 # Second Frame Class
 class SecondFrame(tk.Frame):
@@ -81,6 +85,9 @@ class SecondFrame(tk.Frame):
 			app.destroy()
 		b2 = tk.Button(self, text="Exit", command=quit)
 		b2.place(x = 650, y = 450)
+	def show_me(self):
+		app.update()
+		app.deiconify()
 
 # Main Class
 class Application(tk.Tk):

