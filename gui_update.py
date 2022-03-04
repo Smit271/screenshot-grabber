@@ -3,6 +3,9 @@ from tkinter import ttk, messagebox
 from ss import Take
 from datetime import datetime
 from login_api import Login
+from PIL import Image, ImageTk
+from pystray import MenuItem as item
+import pystray 
 
 # Frames logic
 # First Frame Class
@@ -51,7 +54,8 @@ class FirstFrame(tk.Frame):
 				controller.show_frame(SecondFrame)
 				infinite_loop()
 				t = datetime.now()
-				self.hide_and_return()
+				FirstFrame.hide_window()
+				# self.hide_and_return()
 				# print(f"Start time : {t}")
 			else:
 				messagebox.showinfo("Error", "Wrong Credentials")
@@ -65,8 +69,24 @@ class FirstFrame(tk.Frame):
 		b2 = tk.Button(self, text="Exit", command=quit)
 		b2.place(x = 650, y = 450)
 	def hide_and_return(self):
-			app.iconify() # Will minimize the app
-			SecondFrame.show_me()
+		app.iconify() # Will minimize the app
+		SecondFrame.show_me()
+
+	# Define a function for quit the window
+	def quit_window(icon, item):
+		icon.stop()
+		app.destroy()
+
+	# Define a function to show the window again
+	def show_window(icon, item):
+		icon.stop()
+		app.after(0,app.deiconify())
+	def hide_window():
+		app.withdraw()
+		image=Image.open("icon-1.ico")
+		menu=(item('Quit', FirstFrame.quit_window), item('Open', FirstFrame.show_window))
+		icon=pystray.Icon("name", image, "Application", menu)
+		icon.run()
 
 # Second Frame Class
 class SecondFrame(tk.Frame):
@@ -85,7 +105,7 @@ class SecondFrame(tk.Frame):
 			app.destroy()
 		b2 = tk.Button(self, text="Exit", command=quit)
 		b2.place(x = 650, y = 450)
-	def show_me(self):
+	def show_me():
 		app.update()
 		app.deiconify()
 
@@ -93,7 +113,7 @@ class SecondFrame(tk.Frame):
 class Application(tk.Tk):
 	def __init__(self, *args, **kwargs):
 		tk.Tk.__init__(self, *args, **kwargs)
-
+		# tk.Tk.title("App")
 		# creating window
 		window = tk.Frame(self)
 		window.pack()
@@ -108,9 +128,14 @@ class Application(tk.Tk):
 			frame.grid(row = 0, column = 0, sticky = "nsew")
 
 		self.show_frame(FirstFrame)
+
 	def show_frame(self, page):
 		frame = self.frames[page]
 		frame.tkraise()
 
 app = Application()
+app.title("Application")
+app.geometry("700x500")
+app.resizable(0, 0)
+app.protocol('WM_DELETE_WINDOW', FirstFrame.hide_window)
 app.mainloop()
