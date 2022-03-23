@@ -1,11 +1,14 @@
+from email.mime import image
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, PhotoImage
+from tkinter import font
 from ss import Take
 from datetime import datetime
 from login_api import Login
 from PIL import Image, ImageTk
 from pystray import MenuItem as item
 import pystray 
+import customtkinter
 
 # Frames logic
 # First Frame Class
@@ -16,17 +19,23 @@ class FirstFrame(tk.Frame):
 		self.e_id = ""
 		self.e_email = ""
 
-		L1 = tk.Label(self, text="Email", font = ("Arial Bold", 15))
+		# ----- Background Image settings ----- #
+		img = ImageTk.PhotoImage(Image.open("./assets/image_1.png"), Image.ANTIALIAS)
+		lbl = tk.Label(self, image=img)
+		lbl.img = img  # Keep a reference in case this code put is in a function.
+		lbl.place(relx=0.5, rely=0.5, anchor='center') 
+		# -------------------------------------- #
+		L1 = customtkinter.CTkLabel(self, text="Email")
 		L1.place(x = 50, y = 50)
-		T1 = tk.Entry(self, width = 30, bd = 5)
+		T1 = customtkinter.CTkEntry(self, width = 200)
 		T1.place(x = 200, y = 50)
 
-		L2 = tk.Label(self, text="Password", font = ("Arial Bold", 15))
+		L2 = customtkinter.CTkLabel(self, text="Password")
 		L2.place(x = 50, y = 100)
-		T2 = tk.Entry(self, width = 30, bd = 5, show = '*')
+		T2 = customtkinter.CTkEntry(self, width = 200, show = '*')
 		T2.place(x = 200, y = 100)
 
-		label = tk.Label(self, text="Enter Credentials", font = ("Arial Bold", 15)	)
+		label = customtkinter.CTkLabel(self, text="Enter Credentials")
 		label.place(x = 230, y = 230)
 
 		def infinite_loop():
@@ -59,15 +68,22 @@ class FirstFrame(tk.Frame):
 				# print(f"Start time : {t}")
 			else:
 				messagebox.showinfo("Error", "Wrong Credentials")
-		b1 = tk.Button(self, text="Start", command=verify)
-		b1.place(x = 650, y = 400)
+		
+		# button_image_1 = PhotoImage(
+		# 	file= "./assets/button_2.png")
+		b1 = customtkinter.CTkButton(self,
+		 		text="Start",
+				command=verify,
+				width=20, 
+				height=20)
+		b1.place(x = 625, y = 400)
 
 		def quit():
 			t = datetime.now()
 			# print(f"Exit time : {t}")
 			app.destroy()
-		b2 = tk.Button(self, text="Exit", command=quit)
-		b2.place(x = 650, y = 450)
+		b2 = customtkinter.CTkButton(self, text="Exit", command=quit, width=20, height=20)
+		b2.place(x = 625, y = 450)
 	def hide_and_return(self):
 		app.iconify() # Will minimize the app
 		SecondFrame.show_me()
@@ -115,6 +131,8 @@ class Application(tk.Tk):
 		tk.Tk.__init__(self, *args, **kwargs)
 		# tk.Tk.title("App")
 		# creating window
+		customtkinter.set_appearance_mode("System")
+		customtkinter.set_default_color_theme("blue")
 		window = tk.Frame(self)
 		window.pack()
 
