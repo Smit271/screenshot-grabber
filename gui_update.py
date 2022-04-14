@@ -81,7 +81,6 @@ class FirstFrame(tk.Frame):
 
 		def quit():
 			t = datetime.now()
-			# print(f"Exit time : {t}")
 			app.destroy()
 		b2 = customtkinter.CTkButton(self, text="Exit", command=quit, width=20, height=20)
 		b2.place(x = 625, y = 450)
