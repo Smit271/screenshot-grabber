@@ -1,6 +1,0 @@
-[Desktop Entry]
-Version = 1.0
-Name = Inn
-Exec = /home/download/Inn/gui_update.py
-Icon = /home/download/Inn/icon-1.ico
-Type = Application
