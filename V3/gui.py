@@ -14,10 +14,19 @@ import os
 import json
 from ss import Take
 from login_api import Login
+import shutil
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path("./assets")
 
+# ----------- Script to copy file into STARTUP ----------- #
+# STARTUP_FOLDER = "C:\\Users\\User\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"
+# TEMP = STARTUP_FOLDER / Path("./Inn.exe")
+# is_app_in_startup = os.path.exists(TEMP)
+# if not is_app_in_startup:
+#     FILE = Path(__file__).parent / Path("./Inn.exe")
+#     shutil.copyfile(FILE, STARTUP_FOLDER)
+# --------------------------------------------------------- #
 
 def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
@@ -65,13 +74,15 @@ def verify():
         entry_2.destroy()
         canvas.delete(email_label)
         canvas.delete(pass_label)
-        pass_label = canvas.create_text(
+        canvas.delete(entry_bg_1)
+        canvas.delete(entry_bg_2)
+        pass_label2 = canvas.create_text(
                                         604.0,
                                         328.0,
                                         anchor="nw",
                                         text="Keep coding and I will never disturb you.",
                                         fill="#000000",
-                                        font=("RobotoSerifNormalRoman Regular", 24 * -1)
+                                        font=("Times", 24 * -1)
                                     )
         button_1.destroy()
         infinite_loop()
@@ -101,7 +112,8 @@ canvas = Canvas(
 # Background Image
 canvas.place(x = 0, y = 0)
 image_image_1 = PhotoImage(
-    file=relative_to_assets("image_1.png"))
+    file=os.path.join(os.getcwd(), "./assets/image_1.png")
+    )
 image_1 = canvas.create_image(
     500.0,
     350.0,
@@ -111,16 +123,17 @@ image_1 = canvas.create_image(
 # Copyright text
 canvas.create_text(
     0.0,
-    688.0,
+    686.0,
     anchor="nw",
-    text="copyright @smit_panchal",
+    text="Copyright @Smit_Panchal",
     fill="#000000",
-    font=("RobotoSerifNormalRoman Regular", 10 * -1)
+    font=("Times 10")
 )
 
 # Login Button
 button_image_1 = PhotoImage(
-    file=relative_to_assets("button_1.png"))
+    file=os.path.join(os.getcwd(), "./assets/button_1.png")
+    )
 button_1 = Button(
     image=button_image_1,
     borderwidth=0,
@@ -142,7 +155,7 @@ email_label = canvas.create_text(
     anchor="nw",
     text="Email",
     fill="#000000",
-    font=("RobotoSerifNormalRoman Regular", 24 * -1)
+    font=("Times 24")
 )
 
 # Password label
@@ -152,11 +165,12 @@ pass_label = canvas.create_text(
     anchor="nw",
     text="Password",
     fill="#000000",
-    font=("RobotoSerifNormalRoman Regular", 24 * -1)
+    font=("Times 24")
 )
 
 image_image_2 = PhotoImage(
-    file=relative_to_assets("image_2.png"))
+    file=os.path.join(os.getcwd(), "./assets/image_2.png")
+    )
 image_2 = canvas.create_image(
     165.0,
     297.0,
@@ -165,7 +179,8 @@ image_2 = canvas.create_image(
 
 # Email-ID Entry
 entry_image_1 = PhotoImage(
-    file=relative_to_assets("entry_1.png"))
+    file=os.path.join(os.getcwd(), "./assets/entry_1.png")
+    )
 entry_bg_1 = canvas.create_image(
     870.5,
     225.0,
@@ -175,7 +190,7 @@ entry_1 = Entry(
     bd=0,
     bg="#4B96A5",
     highlightthickness=0,
-    font=('RobotoSerifNormalRoman 18')
+    font=('Times 18')
 )
 entry_1.place(
     x=737.0,
@@ -186,7 +201,8 @@ entry_1.place(
 
 # Password Entry
 entry_image_2 = PhotoImage(
-    file=relative_to_assets("entry_2.png"))
+    file= os.path.join(os.getcwd(), "./assets/entry_2.png")
+    )
 entry_bg_2 = canvas.create_image(
     870.5,
     350.0,
@@ -196,7 +212,8 @@ entry_2 = Entry(
     bd=0,
     bg="#4B96A5",
     highlightthickness=0,
-    font=('RobotoSerifNormalRoman 18')
+    font=('Times 18'),
+    show = '*'
 )
 entry_2.place(
     x=737.0,
@@ -204,12 +221,29 @@ entry_2.place(
     width=267.0,
     height=62.0
 )
+def hide():
+    window.iconify()
 
+
+if os.path.exists(os.path.join(os.getcwd(), 'cred.json')):
+    entry_1.destroy()
+    entry_2.destroy()
+    canvas.delete(email_label)
+    canvas.delete(pass_label)
+    canvas.delete(entry_bg_1)
+    canvas.delete(entry_bg_2)
+    pass_label2 = canvas.create_text(
+                                    604.0,
+                                    328.0,
+                                    anchor="nw",
+                                    text="Keep coding and I will never disturb you.",
+                                    fill="#000000",
+                                    font=("Times", 24 * -1)
+                                )
+    button_1.invoke()
 
 window.resizable(False, False)
 window.title("Innovexxia Technologies")
-window.protocol('WM_DELETE_WINDOW', hide_window)
+window.protocol('WM_DELETE_WINDOW', hide)
 window.iconbitmap(os.path.join(os.getcwd(), 'Asset_4.ico'))
 window.mainloop()
-
-

@@ -2,3 +2,6 @@
 /__pycache__
 *.jpeg
 *.json
+/output_v1/
+V3/output/
+**.pyc
