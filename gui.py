@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import * as tk
 from ss import Take
 root = Tk()
 root.title("App")

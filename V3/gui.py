@@ -3,11 +3,12 @@
 
 >> Developer details: <<
 >>>> Smit Panchal
->>>> Python Developer, ML Developer, Django Developer
+>>>> Python Developer, Django Developer
 
 """
 
 from pathlib import Path
+from tkinter import *
 from tkinter import Tk, Canvas, Entry, Text, Button, PhotoImage
 from tkinter import messagebox
 import os
